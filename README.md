@@ -1,17 +1,17 @@
 <div align="center">
 
-# 🖥️ ITServiceDesk Pro
+# 🏥 HospitalFlow
 
-### Enterprise IT Service Management System on ServiceNow
+### Patient OPD Management & Hospital Services Automation on ServiceNow
 
-[![ServiceNow](https://img.shields.io/badge/ServiceNow-ITSM-green?style=for-the-badge&logo=servicenow&logoColor=white)](https://www.servicenow.com/)
-[![ITIL](https://img.shields.io/badge/ITIL-Aligned-blue?style=for-the-badge)](https://www.axelos.com/certifications/itil-service-management)
+[![ServiceNow](https://img.shields.io/badge/ServiceNow-Healthcare-green?style=for-the-badge&logo=servicenow&logoColor=white)](https://www.servicenow.com/)
+[![Domain](https://img.shields.io/badge/Domain-Healthcare-red?style=for-the-badge)]()
 [![Status](https://img.shields.io/badge/Status-Complete-brightgreen?style=for-the-badge)]()
 [![Developer](https://img.shields.io/badge/Developer-Krishna%20Chaurasiya-orange?style=for-the-badge)](https://github.com/krishna-9016)
 
 ---
 
-> **ITServiceDesk Pro** is a fully functional IT Service Management (ITSM) application built on ServiceNow, covering Incident Management, Asset & Configuration Management (CMDB), and Change Request workflows — all aligned with ITIL best practices.
+> **HospitalFlow** is a ServiceNow-based hospital management system that automates the complete patient journey — from OPD appointment booking to discharge — eliminating manual paperwork, reducing wait times, and improving the overall healthcare experience through smart workflows and a self-service patient portal.
 
 ---
 
@@ -24,10 +24,9 @@
 - [ServiceNow Modules Used](#-servicenow-modules-used)
 - [Database Tables](#-database-tables)
 - [Workflows & Flows](#-workflows--flows)
-- [SLA Configuration](#-sla-configuration)
-- [REST API Integration](#-rest-api-integration)
+- [Notifications & Automation](#-notifications--automation)
 - [Dashboard & Reports](#-dashboard--reports)
-- [Knowledge Base](#-knowledge-base)
+- [Patient Self-Service Portal](#-patient-self-service-portal)
 - [How to Build — Step by Step](#-how-to-build--step-by-step)
 - [Screenshots](#-screenshots)
 - [Future Enhancements](#-future-enhancements)
@@ -37,50 +36,99 @@
 
 ## 🔍 Overview
 
-**ITServiceDesk Pro** simulates a real-world enterprise IT helpdesk system. It enables IT teams to:
+**HospitalFlow** digitizes the day-to-day operations of a hospital's outpatient department (OPD). The system handles:
 
-- Log, assign, escalate, and resolve **incidents**
-- Track all IT **assets** (laptops, servers, licenses) with full lifecycle management
-- Submit, review, and approve **change requests** through a CAB (Change Advisory Board) process
-- Monitor team performance via **SLA tracking** and **KPI dashboards**
-- Reduce ticket volume via an integrated **Knowledge Base**
+- Online appointment booking with real-time doctor availability
+- Patient registration and insurance verification
+- Doctor assignment and consultation tracking
+- Lab test ordering, result upload, and report delivery
+- Billing and payment management
+- Discharge summary generation
+- Support ticket system for patient queries
 
-This project demonstrates core ServiceNow ITSM capabilities that are directly tested in **CSA** and **CAD** certification exams.
+This project showcases ServiceNow's **Service Catalog**, **Flow Designer**, **Service Portal**, and **Business Rules** in a real-world healthcare context — demonstrating how ServiceNow extends beyond IT into enterprise service management.
 
 ---
 
 ## ✨ Features
 
-### 🚨 1. Incident Management
-- Raise incidents via Service Portal or direct form entry
-- Auto-assignment to IT groups based on **category** (Network, Hardware, Software, Security)
-- **Priority matrix** auto-calculation based on Impact × Urgency
-- Escalation rules — auto-escalate P1 incidents to IT Manager if unresolved within 1 hour
-- Full incident lifecycle: `New → Assigned → In Progress → Resolved → Closed`
-- Link incidents to **Problem records** for root cause analysis
+### 📅 1. OPD Appointment Booking
+- Patients book appointments via the **Self-Service Portal**
+- Dynamic doctor availability slots based on department and day
+- Departments supported: General Medicine, Cardiology, Orthopedics, Neurology, Pediatrics, Dermatology
+- Appointment statuses: `Requested → Confirmed → In Consultation → Completed → Cancelled`
+- Auto-confirmation email with appointment ID, doctor name, time slot, and room number
+- **Reschedule & Cancel** options available up to 2 hours before the appointment
 
-### 🗃️ 2. Asset & CMDB Management
-- Track IT assets: Laptops, Desktops, Servers, Network Devices, Software Licenses
-- Asset lifecycle states: `Ordered → In Stock → In Use → In Maintenance → Retired`
-- Auto-populate CMDB Configuration Items (CIs) when asset is assigned to a user
-- Relationship mapping: Asset → User → Department → Location
-- View full **assignment history** for any asset
+### 🧾 2. Patient Registration & Onboarding
+Automated patient onboarding after first appointment confirmation:
 
-### 🔄 3. Change Request Management (ITIL CAB)
-- Three change types: **Standard**, **Normal**, **Emergency**
-- Risk assessment form with impact analysis fields
-- Multi-level approval workflow:
-  ```
-  Requester → IT Manager → CAB Approval → Implementation → Review → Closed
-  ```
-- Rollback plan mandatory for high-risk changes
-- Blackout window configuration — block changes during critical business periods
+**Onboarding Checklist:**
+- ✅ Patient ID Generation (unique `PAT-XXXXXX`)
+- ✅ Medical Record Number (MRN) Assignment
+- ✅ Insurance Verification
+- ✅ Emergency Contact Registration
+- ✅ Patient Portal Account Activation
+- ✅ Welcome Email with Portal Credentials
 
-### 📋 4. Problem Management
-- Link multiple incidents to a single Problem record
-- Root Cause Analysis (RCA) documentation
-- Known Error Database (KEDB) integration
-- Problem lifecycle: `New → Assess → Root Cause Analysis → Fix in Progress → Resolved`
+### 👨‍⚕️ 3. Doctor & Consultation Management
+- Doctor profiles with specialization, availability schedule, and max daily patients
+- Auto-assignment of doctor based on department and availability
+- Consultation notes form for doctors to record:
+  - Chief Complaint
+  - Diagnosis
+  - Prescription
+  - Follow-up date
+  - Referral to specialist (if needed)
+- Consultation lifecycle: `Scheduled → In Progress → Completed`
+
+### 🧪 4. Lab & Diagnostics Management
+- Doctor orders lab tests directly from consultation form
+- Tests routed to respective lab departments: Pathology, Radiology, Microbiology
+- Lab technician uploads results with reference ranges
+- Auto-notification to doctor and patient when results are ready
+- Reports archived in patient's medical history
+
+**Supported Tests:**
+- Blood CBC, LFT, KFT, Lipid Profile
+- X-Ray, MRI, CT Scan, Ultrasound
+- Urine Routine, Culture & Sensitivity
+- ECG, Echo
+
+### 💳 5. Billing & Payment Management
+- Auto-generation of bill after consultation + lab orders
+- Bill components: Consultation Fee + Lab Charges + Medication Charges
+- Payment statuses: `Pending → Partially Paid → Paid → Waived`
+- Insurance claim submission workflow
+- Receipt generation on payment confirmation
+- Outstanding balance alerts sent to patient
+
+### 🏨 6. IPD (Inpatient) Admission
+- Doctor can recommend IPD admission from consultation
+- Ward and bed allocation workflow: `Request → Ward Manager Approval → Bed Assigned`
+- Ward types: General, Semi-Private, Private, ICU
+- Nurse assignment to admitted patient
+- Daily progress notes by attending doctor
+
+### 🚪 7. Discharge Management
+- Discharge initiated by treating doctor
+- Discharge summary auto-generated including:
+  - Diagnosis summary
+  - Treatment given
+  - Medications prescribed
+  - Follow-up instructions
+  - Lab reports attached
+- Final bill generated on discharge
+- Feedback form sent to patient post-discharge
+
+### 🎫 8. Patient Help Desk
+- Patients raise support tickets for:
+  - Appointment issues
+  - Billing queries
+  - Lab report delays
+  - Feedback & complaints
+- Ticket routing to respective department staff
+- SLA-based resolution tracking
 
 ---
 
@@ -89,18 +137,16 @@ This project demonstrates core ServiceNow ITSM capabilities that are directly te
 | Module | Purpose |
 |---|---|
 | **ServiceNow Studio** | Application development environment |
-| **Flow Designer** | Approval workflows, escalation, automation |
-| **Service Catalog** | Self-service incident/request submission portal |
-| **Service Portal** | Employee-facing IT helpdesk portal |
-| **Business Rules** | Auto-assignment, priority calculation, status updates |
-| **Client Scripts** | Real-time form validation, dynamic field visibility |
-| **UI Policies** | Show/hide fields based on incident category |
-| **SLA Management** | Define, track, and breach SLA targets |
-| **CMDB** | Asset and configuration item tracking |
-| **Notifications** | Email alerts for assignments, SLA breach, approvals |
-| **Reports & Dashboards** | KPI visibility for IT managers |
-| **Knowledge Management** | Self-service article library |
-| **REST API / Scripted REST** | Inbound webhook for auto-incident creation |
+| **Service Catalog** | Appointment booking, lab test requests, IPD admission requests |
+| **Flow Designer** | Patient onboarding, appointment confirmation, discharge workflows |
+| **Service Portal** | Patient self-service portal |
+| **Business Rules** | Auto-assignment, bill calculation, MRN generation |
+| **Client Scripts** | Dynamic slot availability, form field control |
+| **UI Policies** | Show/hide fields based on appointment type and patient status |
+| **Notifications** | Appointment confirmations, lab results, discharge summaries |
+| **Reports & Dashboards** | OPD stats, doctor utilization, revenue reports |
+| **SLA Management** | Lab report turnaround time, help desk resolution |
+| **Scheduled Jobs** | Daily appointment reminders, follow-up alerts |
 
 ---
 
@@ -108,262 +154,283 @@ This project demonstrates core ServiceNow ITSM capabilities that are directly te
 
 | Table Name | Description |
 |---|---|
-| `x_itsd_incident` | Core incident records |
-| `x_itsd_asset` | IT asset master data |
-| `x_itsd_cmdb_ci` | CMDB Configuration Items |
-| `x_itsd_change_request` | Change request records |
-| `x_itsd_problem` | Problem records linked to incidents |
-| `x_itsd_sla_definition` | SLA rules and breach thresholds |
-| `x_itsd_knowledge` | Knowledge Base articles |
-| `x_itsd_assignment_group` | IT team groups for routing |
-| `x_itsd_audit_log` | Full audit trail of all changes |
+| `x_hf_patient` | Patient master records |
+| `x_hf_appointment` | OPD appointment bookings |
+| `x_hf_doctor` | Doctor profiles and schedules |
+| `x_hf_consultation` | Consultation notes and prescriptions |
+| `x_hf_lab_order` | Lab test orders linked to consultation |
+| `x_hf_lab_result` | Lab results uploaded by technicians |
+| `x_hf_billing` | Patient bills and payment tracking |
+| `x_hf_ipd_admission` | Inpatient admission records |
+| `x_hf_discharge` | Discharge summaries |
+| `x_hf_support_ticket` | Patient help desk tickets |
+| `x_hf_doctor_schedule` | Doctor availability slots by day/time |
 
 ---
 
 ## 🔁 Workflows & Flows
 
-### Incident Flow
+### Patient Journey — End to End
 ```
-Employee Submits Incident (Portal)
-          ↓
-Auto-Assignment to Group (Business Rule)
-          ↓
-Agent Picks Up → Status: In Progress
-          ↓
-   ┌──────┴──────┐
-Resolved      Escalated (SLA Breach)
-   ↓                  ↓
-Closed         IT Manager Notified
-```
-
-### Change Request Flow
-```
-Requester Submits Change Request
-          ↓
-IT Manager Review (Approve / Reject)
-          ↓
-CAB (Change Advisory Board) Vote
-          ↓
-Implementation Window Scheduled
-          ↓
-Change Implemented → Post-Implementation Review
-          ↓
-         Closed
+Patient Books Appointment (Portal)
+             ↓
+   Auto Slot Confirmation (Flow)
+             ↓
+   Patient Arrives → Registration
+             ↓
+   Doctor Consultation
+       ↓           ↓
+  Lab Orders    Prescription
+       ↓
+  Lab Results Ready → Notified
+       ↓
+   Follow-up / IPD Admission?
+       ↓               ↓
+   Discharged      Bed Allocated
+       ↓
+  Discharge Summary + Final Bill
+       ↓
+    Feedback Sent
 ```
 
-### Asset Lifecycle Flow
+### Appointment Booking Flow
 ```
-Asset Ordered
-     ↓
-Received → In Stock
-     ↓
-Assigned to User → In Use
-     ↓
-Issue Raised → In Maintenance
-     ↓
-End of Life → Retired
+Patient Submits Booking (Catalog)
+             ↓
+Check Doctor Availability (Business Rule)
+             ↓
+      ┌──────┴──────┐
+  Available      Not Available
+      ↓                ↓
+Slot Confirmed    Suggest Next Slot
+      ↓
+Confirmation Email + Calendar Invite
+```
+
+### Lab Test Flow
+```
+Doctor Orders Lab Test (Consultation Form)
+             ↓
+Lab Order Record Created → Routed to Lab Dept
+             ↓
+Lab Technician Processes Sample
+             ↓
+Results Uploaded with Reference Ranges
+             ↓
+Auto-Notify Doctor + Patient
+             ↓
+Report Archived in Patient History
+```
+
+### IPD Admission & Discharge Flow
+```
+Doctor Recommends Admission
+             ↓
+Admission Request → Ward Manager Approval
+             ↓
+Bed Allocated → Nurse Assigned
+             ↓
+Daily Progress Notes by Doctor
+             ↓
+Doctor Initiates Discharge
+             ↓
+Discharge Summary Auto-Generated
+             ↓
+Final Bill Created → Payment Collected
+             ↓
+Feedback Form Sent to Patient
 ```
 
 ---
 
-## ⏱️ SLA Configuration
+## 🔔 Notifications & Automation
 
-| SLA Name | Priority | Response Time | Resolution Time |
-|---|---|---|---|
-| P1 - Critical | 1 | 15 minutes | 1 hour |
-| P2 - High | 2 | 30 minutes | 4 hours |
-| P3 - Medium | 3 | 2 hours | 8 hours |
-| P4 - Low | 4 | 4 hours | 24 hours |
+| Trigger | Notification Sent To |
+|---|---|
+| Appointment Confirmed | Patient — confirmation with slot details |
+| Appointment Reminder | Patient — 24 hours before appointment |
+| Lab Results Ready | Doctor + Patient |
+| Bill Generated | Patient — itemized bill |
+| Payment Received | Patient — receipt |
+| IPD Bed Allocated | Patient + Attendant |
+| Discharge Initiated | Patient — discharge summary + instructions |
+| Follow-up Due | Patient — 1 day before follow-up date |
+| Help Desk Ticket Resolved | Patient |
 
-- **Warning threshold**: 75% of resolution time elapsed → email alert sent
-- **Breach**: SLA breached → auto-escalate + notify IT Manager
-- SLA pauses when incident is in **Pending** state (waiting on user)
-
----
-
-## 🔗 REST API Integration
-
-ITServiceDesk Pro exposes and consumes REST APIs to simulate real-world monitoring tool integrations.
-
-### Inbound — Auto Incident Creation
-A monitoring tool (e.g., Nagios, Datadog) sends an alert via webhook → ServiceNow auto-creates an incident.
-
-```json
-POST /api/x_itsd/incident/create
-{
-  "short_description": "Server CPU usage exceeded 95%",
-  "category": "Hardware",
-  "impact": "1",
-  "urgency": "1",
-  "source": "Nagios Monitor"
-}
-```
-
-**Business Rule** processes the payload and creates the incident record automatically with priority P1.
-
-### Outbound — Notify External Teams
-When a P1 incident is raised, ServiceNow sends a REST call to an external Slack/Teams webhook to alert the on-call engineer.
+**Scheduled Jobs:**
+- Daily 8 AM — send appointment reminders for the day
+- Daily 6 PM — flag overdue lab reports (SLA breach)
+- Weekly — generate OPD utilization report for admin
 
 ---
 
 ## 📊 Dashboard & Reports
 
-### IT Manager Dashboard
+### Hospital Admin Dashboard
+
 | Widget | Metric |
 |---|---|
-| 🔴 Open Incidents | Count by priority |
-| 🟡 SLA At Risk | Incidents approaching breach |
-| 🟢 Resolved Today | Count |
-| 📈 MTTR | Mean Time to Resolve (avg in hours) |
-| 🖥️ Asset Utilization | % of assets currently in use |
-| 🔄 Pending Changes | Changes awaiting CAB approval |
+| 📅 Today's Appointments | Count by department |
+| 🧪 Pending Lab Reports | Overdue vs. in-progress |
+| 💰 Revenue Today | Consultation + Lab + IPD |
+| 🛏️ Bed Occupancy | % of beds occupied by ward |
+| 👨‍⚕️ Doctor Utilization | Patients seen per doctor |
+| 🎫 Open Support Tickets | Count by category |
 
 ### Report Types Built
-- **Incident Trend** — bar chart, incidents per week
-- **SLA Compliance** — % of incidents resolved within SLA per month
-- **Top Incident Categories** — pie chart (Network / Hardware / Software)
-- **Change Success Rate** — successful vs. failed changes
-- **Asset Distribution** — assets per department
+- **Daily OPD Count** — appointments per department per day
+- **Doctor Workload** — consultations per doctor per week
+- **Lab TAT (Turnaround Time)** — avg hours from order to result
+- **Revenue Breakdown** — pie chart by service type
+- **Patient Satisfaction** — avg feedback score per doctor
+- **Appointment No-Show Rate** — % of booked vs. attended
 
 ---
 
-## 📚 Knowledge Base
+## 🌐 Patient Self-Service Portal
 
-- Articles linked to incident **categories** (e.g., "How to reset VPN" linked to Network incidents)
-- Agents can **suggest articles** to users during incident resolution
-- Users can rate articles (👍 / 👎) — low-rated articles flagged for review
-- Reduces repeat tickets by enabling **self-service resolution**
+The patient-facing portal (`/hospitalflow`) allows patients to:
 
-**Sample Articles:**
-- How to connect to VPN remotely
-- Steps to request a new software license
-- Laptop not booting — first-level troubleshooting guide
-- How to reset your Active Directory password
+| Action | Description |
+|---|---|
+| 📅 Book Appointment | Select department, doctor, date, time slot |
+| 🔍 Track Appointment | View status and doctor details |
+| 🧪 View Lab Reports | Download results as PDF |
+| 💳 View & Pay Bills | Online payment with receipt download |
+| 📋 Medical History | Past consultations, prescriptions, reports |
+| 🎫 Raise Support Ticket | Query for billing, reports, feedback |
+| 📝 Give Feedback | Rate doctor and hospital experience |
 
 ---
 
 ## 🏗️ How to Build — Step by Step
 
-> Follow this guide on your **ServiceNow PDI** (Personal Developer Instance) at [developer.servicenow.com](https://developer.servicenow.com)
+> Build this on your **ServiceNow PDI** at [developer.servicenow.com](https://developer.servicenow.com)
 
 ### Step 1 — Create the Application
-1. Go to **ServiceNow Studio** → `Create Application`
-2. Name: `ITServiceDesk Pro`, Scope: `x_itsd`
-3. Choose **Classic Application**
+1. Open **ServiceNow Studio** → `Create Application`
+2. Name: `HospitalFlow`, Scope: `x_hf`
+3. Type: **Classic Application**
 
 ### Step 2 — Create Tables
-Create the following tables in Studio → `Create Application File` → `Table`:
+Go to Studio → `Create Application File` → `Table` for each:
 
-| Table | Extends | Key Fields |
+| Table | Extends | Important Fields |
 |---|---|---|
-| Incident | Task | category, priority, assignment_group, state |
-| Asset | None | asset_tag, model, assigned_to, state, serial_number |
-| Change Request | Task | type, risk, cab_required, implementation_date |
-| Problem | Task | related_incidents, root_cause, workaround |
+| Patient | None | patient_id, name, dob, blood_group, insurance_id, emergency_contact |
+| Appointment | None | patient, doctor, department, slot_date, slot_time, status |
+| Doctor | None | name, specialization, department, max_daily_patients |
+| Consultation | None | appointment, diagnosis, prescription, lab_ordered, follow_up_date |
+| Lab Order | None | consultation, test_name, department, status, ordered_by |
+| Lab Result | None | lab_order, result_value, reference_range, uploaded_by, report_file |
+| Billing | None | patient, appointment, consultation_fee, lab_charges, total, status |
 
-> **Pro tip:** Extending `Task` gives you built-in fields like assigned_to, state, short_description, and SLA support for free.
+### Step 3 — MRN Auto-Generation (Business Rule)
 
-### Step 3 — Build Forms
-For each table, open **Form Designer** and arrange:
-- Header section: Number, Short Description, State
-- Details section: Category, Priority, Impact, Urgency
-- Assignment section: Assignment Group, Assigned To
-- Resolution section: Resolution Notes, Close Code
-
-### Step 4 — Priority Auto-Calculation (Business Rule)
 ```javascript
-// Business Rule: Before Insert/Update on Incident table
-// Name: Auto Calculate Priority
+// Business Rule: Before Insert on x_hf_patient
+// Name: Generate Patient MRN
 
 (function executeRule(current, previous) {
-    var impact = parseInt(current.impact);
-    var urgency = parseInt(current.urgency);
-    var matrix = {
-        '1,1': '1', '1,2': '2', '1,3': '3',
-        '2,1': '2', '2,2': '3', '2,3': '4',
-        '3,1': '3', '3,2': '4', '3,3': '5'
-    };
-    current.priority = matrix[impact + ',' + urgency] || '4';
+    var prefix = 'PAT-';
+    var counter = new GlideRecord('x_hf_patient');
+    counter.orderByDesc('sys_created_on');
+    counter.setLimit(1);
+    counter.query();
+    var nextNum = 1000;
+    if (counter.next()) {
+        var lastId = counter.patient_id.toString();
+        var lastNum = parseInt(lastId.replace(prefix, ''));
+        nextNum = lastNum + 1;
+    }
+    current.patient_id = prefix + nextNum;
 })(current, previous);
 ```
 
-### Step 5 — Auto Assignment (Business Rule)
+### Step 4 — Auto Bill Calculation (Business Rule)
+
 ```javascript
-// Business Rule: After Insert on Incident table
-// Name: Auto Assign to Group
+// Business Rule: Before Insert/Update on x_hf_billing
+// Name: Calculate Total Bill
 
 (function executeRule(current, previous) {
-    var groupMap = {
-        'network':  'Network Support',
-        'hardware': 'Hardware Support',
-        'software': 'Software Support',
-        'security': 'Security Team'
-    };
-    var groupName = groupMap[current.category.toString().toLowerCase()];
-    if (groupName) {
-        var gr = new GlideRecord('sys_user_group');
-        gr.addQuery('name', groupName);
-        gr.query();
-        if (gr.next()) {
-            current.assignment_group = gr.sys_id;
-        }
+    var consultFee = parseFloat(current.consultation_fee) || 0;
+    var labCharges = parseFloat(current.lab_charges) || 0;
+    var medCharges = parseFloat(current.medication_charges) || 0;
+    current.total_amount = consultFee + labCharges + medCharges;
+
+    if (current.amount_paid >= current.total_amount) {
+        current.payment_status = 'paid';
+    } else if (current.amount_paid > 0) {
+        current.payment_status = 'partially_paid';
+    } else {
+        current.payment_status = 'pending';
     }
 })(current, previous);
 ```
 
-### Step 6 — SLA Definitions
-1. Go to **SLA → SLA Definitions** → New
-2. Name: `P1 Resolution SLA`
-3. Table: `x_itsd_incident`
-4. Conditions: `Priority = 1`
-5. Duration: `1 Hour`
-6. Pause conditions: `State = Pending`
-7. Add **Workflow** for breach notification
+### Step 5 — Doctor Availability Check (Client Script)
 
-### Step 7 — Flow Designer Workflows
-**Incident Escalation Flow:**
-1. Trigger: SLA Breach on Incident
-2. Action: Update `state` → `Escalated`
-3. Action: Send Email to IT Manager
-4. Action: Create Task for IT Manager follow-up
-
-**Change Approval Flow:**
-1. Trigger: Change Request created with `type = Normal`
-2. Action: Ask for Approval → IT Manager
-3. If Approved → Ask for Approval → CAB Group
-4. If Approved → Set state = `Scheduled`
-5. If Rejected → Set state = `Cancelled`, notify requester
-
-### Step 8 — Service Portal
-1. Go to **Service Portal → Portals** → New
-2. URL Suffix: `itsd`
-3. Add pages: Home, Submit Incident, My Tickets, Knowledge Base
-4. Add catalog items: `Report an Incident`, `Request New Asset`, `Submit Change Request`
-
-### Step 9 — REST API (Scripted REST)
-1. Go to **Scripted REST APIs** → New
-2. Name: `Incident Inbound API`, Base API path: `/incident`
-3. Add Resource: `POST /create`
-4. Script:
 ```javascript
-(function process(request, response) {
-    var body = request.body.data;
-    var gr = new GlideRecord('x_itsd_incident');
-    gr.initialize();
-    gr.short_description = body.short_description;
-    gr.category = body.category;
-    gr.impact = body.impact;
-    gr.urgency = body.urgency;
-    gr.insert();
-    response.setStatus(201);
-    response.setBody({ status: 'created', incident_number: gr.number.toString() });
-})(request, response);
+// Client Script: onChange on Department field in Appointment form
+// Name: Load Doctor Slots
+
+function onChange(control, oldValue, newValue, isLoading) {
+    if (isLoading || newValue === '') return;
+
+    g_form.clearOptions('doctor');
+    g_form.clearOptions('slot_time');
+
+    var ga = new GlideAjax('HospitalFlowAjax');
+    ga.addParam('sysparm_name', 'getDoctorsByDept');
+    ga.addParam('sysparm_dept', newValue);
+    ga.getXMLAnswer(function(response) {
+        var doctors = JSON.parse(response);
+        doctors.forEach(function(doc) {
+            g_form.addOption('doctor', doc.sys_id, doc.name);
+        });
+    });
+}
 ```
 
-### Step 10 — Dashboard
-1. Go to **Reports** → Create reports for each KPI
-2. Go to **Dashboards** → New → Add widgets
-3. Pin reports as widgets on the IT Manager Dashboard
+### Step 6 — Appointment Confirmation Flow (Flow Designer)
+
+1. **Trigger:** Record Created → `x_hf_appointment` where `status = Requested`
+2. **Action 1:** Check doctor availability (inline script)
+3. **Action 2:** Set `status = Confirmed`, assign slot
+4. **Action 3:** Send Email notification to patient
+5. **Action 4:** Create onboarding checklist if new patient
+
+### Step 7 — Lab Result Notification Flow
+
+1. **Trigger:** Record Updated → `x_hf_lab_result` where `status = Uploaded`
+2. **Action 1:** Update linked `x_hf_lab_order` status → `Completed`
+3. **Action 2:** Send Email to Patient with report attached
+4. **Action 3:** Send Email to Doctor with result summary
+
+### Step 8 — Discharge Summary Flow
+
+1. **Trigger:** Record Updated → `x_hf_ipd_admission` where `status = Discharge Initiated`
+2. **Action 1:** Create `x_hf_discharge` record, auto-populate from admission + consultation
+3. **Action 2:** Generate final bill (trigger billing Business Rule)
+4. **Action 3:** Send discharge summary email to patient
+5. **Action 4:** Send feedback form link to patient (after 1 hour delay)
+
+### Step 9 — Service Catalog Items
+Create these catalog items under **Service Catalog → Maintain Items:**
+
+| Catalog Item | Variables |
+|---|---|
+| Book OPD Appointment | Department, Doctor, Date, Time Slot, Reason |
+| Request Lab Test | Test Name, Urgency, Patient ID |
+| IPD Admission Request | Department, Ward Type, Reason, Insurance |
+| Raise Support Ticket | Category, Description, Preferred Contact |
+
+### Step 10 — Service Portal Setup
+1. **Service Portal → Portals** → New → URL: `hospitalflow`
+2. Create pages: Home, Book Appointment, My Records, Lab Reports, Billing, Support
+3. Add **search bar** widget for finding doctors by name/specialization
+4. Add **announcement widget** for hospital news and OPD hours
 
 ---
 
@@ -373,23 +440,27 @@ For each table, open **Form Designer** and arrange:
 
 | Screen | Description |
 |---|---|
-| `screenshots/incident-list.png` | Incident list view with priority color coding |
-| `screenshots/incident-form.png` | Incident form with all sections |
-| `screenshots/change-flow.png` | Flow Designer — Change Approval workflow |
-| `screenshots/dashboard.png` | IT Manager KPI Dashboard |
-| `screenshots/portal-home.png` | Service Portal home page |
-| `screenshots/sla-config.png` | SLA definition configuration |
+| `screenshots/portal-home.png` | Patient self-service portal homepage |
+| `screenshots/appointment-booking.png` | OPD appointment booking catalog form |
+| `screenshots/consultation-form.png` | Doctor's consultation notes form |
+| `screenshots/lab-order.png` | Lab test order and result upload view |
+| `screenshots/billing.png` | Patient bill with itemized charges |
+| `screenshots/discharge-flow.png` | Flow Designer — discharge workflow |
+| `screenshots/dashboard.png` | Hospital Admin KPI dashboard |
+| `screenshots/patient-history.png` | Patient medical history view |
 
 ---
 
 ## 🚀 Future Enhancements
 
-- [ ] AI-powered incident categorization using ML (predict category from description)
-- [ ] Chatbot integration on Service Portal for first-level support
-- [ ] Mobile app integration via ServiceNow Mobile Agent
-- [ ] Automated root cause detection using event correlation
-- [ ] Integration with Active Directory for auto-user provisioning
-- [ ] Shift scheduling for IT support agents
+- [ ] QR Code-based patient check-in at OPD counter
+- [ ] AI-powered symptom checker on the patient portal
+- [ ] Telemedicine / video consultation integration
+- [ ] Pharmacy management module with prescription auto-fulfillment
+- [ ] Ambulance request and tracking system
+- [ ] Parent/guardian portal for pediatric patients
+- [ ] Integration with government health schemes (Ayushman Bharat)
+- [ ] Mobile app via ServiceNow Mobile Agent
 
 ---
 
@@ -411,7 +482,6 @@ Parul University, Vadodara — 2027
 
 **⭐ Star this repo if you found it helpful!**
 
-*Built with ❤️ Krishna Chaurasiya on ServiceNow PDI*
-
+*Built with Krishna Chaurasiya ❤️ on ServiceNow PDI*
 
 </div>
